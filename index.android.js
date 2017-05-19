@@ -12,23 +12,38 @@ import {
   View
 } from 'react-native';
 
+class BlinkText extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showText: true
+        };
+
+        //每1000毫秒对当前状态取反
+        setInterval(() => {
+            this.setState({showText: !this.state.showText})
+        }, 100);
+    }
+
+    render() {
+        //根据当前状态决定是否展示text
+        let result = this.state.showText ? this.props.text : "";
+        return (
+            <Text style={styles.welcome}>{result}</Text>
+        );
+    }
+}
+
 export default class HelloRN extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <BlinkText text="Look at me"/>
+                <BlinkText text="Click me !"/>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
