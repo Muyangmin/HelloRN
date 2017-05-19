@@ -4,31 +4,40 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
+    AppRegistry,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
 } from 'react-native';
 
 export default class HelloRN extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            text: '',
+        };
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <TextInput style={{width: 200, height: 40}} placeholder="Type to translate"
+                           placeholderTextColor="#6897BB"
+                           onchangetext={(text) => {
+                               this.setState(text)
+                           }}
+                />
+                <Text >{this.state.text.split(' ').map((word) => {
+                    word && '🧀'
+                }).join(' ')}</Text>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -36,6 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+      padding : 10,
     backgroundColor: '#F5FCFF',
   },
   welcome: {
