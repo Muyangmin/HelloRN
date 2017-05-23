@@ -4,50 +4,65 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
+    AppRegistry,
+    StyleSheet,
+    Button,
+    Text,
+    View
 } from 'react-native';
 
-export default class HelloRN extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
+import {StackNavigator} from 'react-navigation';
+import ProfileScreen from "./ProfileScreen";
+
+export default class MainScreen extends Component {
+    static navigationOptions = {
+        //Define a static screen title
+        title: "HomeScreen"
+    };
+
+    render() {
+        const {navigate} = this.props.navigation;
+        return (
+            <View style={styles.container}>
+                <Text style={styles.welcome}>Welcome to Home</Text>
+                <Button title="View profile" onPress={
+                    () => {
+                        //First param is Screen alias, and 2nd is custom params(extra args).
+                        navigate('Profile', {
+                            username: 'Lucy',
+                        });
+                    }
+                }/>
+            </View>
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
+});
+
+//This is a StackNavigator; in react-navigation package there are more navigators, such as tabs and drawers.
+const HelloRN = StackNavigator({
+    Home: {screen: MainScreen},
+    Profile: {screen: ProfileScreen},
 });
 
 AppRegistry.registerComponent('HelloRN', () => HelloRN);
