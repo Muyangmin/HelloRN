@@ -4,50 +4,69 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
+    AppRegistry,
+    // NativeModules,
+    LayoutAnimation,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+    View,
 } from 'react-native';
 
+// 实测已经不再需要这两个方法
+// const {UIManager} = NativeModules;
+//
+// UIManager.setLayoutAnimationEnabledExperimental &&
+// UIManager.setLayoutAnimationEnabledExperimental(true);
+
 export default class HelloRN extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
-    );
-  }
+    state = {
+        w: 100,
+        h: 100,
+    };
+
+    _onPress = () => {
+        // Animate the update
+        LayoutAnimation.spring();
+        this.setState({w: this.state.w + 15, h: this.state.h + 15})
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={[styles.box, {width: this.state.w, height: this.state.h}]}/>
+                <TouchableOpacity onPress={this._onPress}>
+                    <View style={styles.button}>
+                        <Text style={styles.buttonText}>Press me!</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    box: {
+        width: 200,
+        height: 200,
+        backgroundColor: 'red',
+    },
+    button: {
+        backgroundColor: 'black',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        marginTop: 15,
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+    },
 });
-
 AppRegistry.registerComponent('HelloRN', () => HelloRN);
